@@ -6,7 +6,8 @@ import os
 import glob
 import random
 import summarizeFile
-import anothertextclassifier
+import urllib2
+from anothertextclassifier import classifier
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Preform a Naive Baise on a given dataset of good and bad sits');
     parser.add_argument("DIRS", help="Directories for each class", nargs="+", type=str)
@@ -46,7 +47,7 @@ if __name__ == "__main__":
             fileA=open(filename,"r")
             dat=fileA.read()
             #print filename
-            parser.feed(dat)
+            parser.feed(urllib2.unquote(dat).decode('utf8'))
         nDat=parser.files
         classSums.append(nDat)
         parser.resetParser()
@@ -54,7 +55,7 @@ if __name__ == "__main__":
         for filename in fTClass:
             fileA=open(filename,"r")
             dat=fileA.read()
-            parser.feed(dat)
+            parser.feed(urllib2.unquote(dat).decode('utf8'))
         nDat=parser.files
         classTestSums.append(nDat)
         parser.resetParser()

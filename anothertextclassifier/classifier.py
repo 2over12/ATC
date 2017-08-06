@@ -68,8 +68,10 @@ def classify(testStruct,cStructs):
                     if totalLikelyhood>0:
                         classProbs=[(((classLikelyhoods[classIndex]*classPriors[classIndex])/totalLikelyhood)*classProbs[classIndex]) for classIndex in range(0,len(cStructs))]
                         for probIndex in range(0,len(classProbs)):
-                            influe=(math.log(classProbs[probIndex],2)-math.log(classPriors[probIndex],2))
-                            allInfluenceVals[probIndex].append(influe)
+			    influe=0
+                            if classProbs[probIndex] != 0 and classPriors[probIndex] != 0:
+				influe=(math.log(classProbs[probIndex],2)-math.log(classPriors[probIndex],2))
+			    allInfluenceVals[probIndex].append(influe)
                             allInfluencingTags.append(tag)
     return [classProbs,allInfluenceVals,allInfluencingTags]
 def isCatagorical(testStruct,cStruct,tag,WordTypeIndex):
